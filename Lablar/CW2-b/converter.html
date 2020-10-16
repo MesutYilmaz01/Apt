@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+    <title>Sayaç </title>
+
+  <style> /* CSS comment */
+    body { max-width: 440px; }
+    #inp { width: 50px }
+    #out {
+        font-size: 18px;
+        background: blue;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked xxx -->
+Inc To Cm 
+<input type=number id=first value="firstText" onchange="toCm()">
+&emsp;</br></br>
+Cm To Inch 
+<input type=number id=second value="secondText" onchange="toInch()">
+&emsp;
+
+<hr />
+
+<script>
+"use strict";
+// JavaScript comment
+function toCm() {
+    let c = Number(first.value);
+	c = (c *(2.54)).toFixed(1);
+	second.value = c;
+}
+function toInch() {
+    let b = Number(second.value);
+	b = (b / (2.54)).toFixed(1);
+	first.value = b;
+}
+</script>
+
+</body>
+</html>
