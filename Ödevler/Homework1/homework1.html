@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>HomeWork1 </title>
+	
+	<style> /* CSS comment */
+    #tablo td{ width:10%;
+				text-align:center}
+  </style>
+</head>	
+	<table id="tablo"></table>
+<body onload="doTable()">
+<script>
+"use strict";
+// JavaScript comment
+const L = [0.5, 1, 1.5, 2, 2.5, 3];
+let array = [];
+let x = 0;
+function doTable() {
+	let row ="";
+	for(let i = 0; i<=9; i++){
+		row += "<tr>";
+		if(i == 0){
+			for(let k = 0; k<L.length+1; k++){
+				if(k == 0){
+					row += "<th></th>";
+				}else{
+					row += "<th> λ: "+L[k-1]+"</th>";					
+				}
+			}	
+		}else{
+			for(let k = 0; k<L.length+1; k++){
+				if(k == 0){
+					row += "<td><b>x = "+x+"</b></td>";
+					x++;
+				}else{
+					if(x==1){
+						row += "<td><pre>"+((Math.exp(-(L[k-1]))).toFixed(4))+"</pre></td>";
+						array.push((Math.exp(-(L[k-1]))).toFixed(4));
+					}else{
+						let newElement = ((array[k-1]*L[k-1])/(x-1)).toFixed(4);
+						array[k-1] = newElement;
+						row += "<td><pre>"+newElement+"</pre></td>";
+					}
+				}	
+			}
+		}	
+		row += "\n</tr>";
+	}
+	tablo.innerHTML = row;
+}
+</script>
+
+</body>
+</html>
