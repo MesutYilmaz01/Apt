@@ -1,0 +1,4 @@
+filter fonksiyonu : Arrayda istenilen koşullar altında satır verisini verir. Örneği adı "Mesut" olan kişileri listele.
+map fonksiyonu : Arrayda istenilen sütun verisini verir. Örneğin "Şehir" sütununu listele.
+find fonksiyonu : Arrayda istenilen verinin olduğu satırı eğer öyle bir veri varsa döndürür.
+pop fonksiyonu : Arrayda en son satırda bulunan veriyi arraydan atar ve geri döndürür.

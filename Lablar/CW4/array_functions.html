@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="../images/icon192.png">
+    <title>List of Objects </title>
+
+  <style>
+    body { max-width: 500px; }
+    #inp { white-space: pre-wrap; }
+    #sample { overflow-x: auto; }
+    #out { color: blue; }
+  </style>
+</head>
+
+<body>
+
+<h2 id=title></h2>
+<b>Text input &emsp;
+<input type=button id=convert value=Convert onclick="toList()">
+</b>
+<p>
+  <textarea id=inp onchange="convert.disabled=false" rows=10 cols=50 >
+  </textarea>
+</p>
+<a href="https://mesutyilmaz01.github.io/Apt/Lablar/CW4/filter.jpg">Filter Fonksiyonu</a><br/>
+<a href="https://mesutyilmaz01.github.io/Apt/Lablar/CW4/find.jpg">Map Fonksiyonu</a><br/>
+<a href="https://mesutyilmaz01.github.io/Apt/Lablar/CW4/find.jpg">Find Fonksiyonu</a><br/>
+<a href="https://mesutyilmaz01.github.io/Apt/Lablar/CW4/pop.jpg">Pop Fonksiyonu</a><br/>
+<a href="https://mesutyilmaz01.github.io/Apt/Lablar/CW4/yorum.txt">Fonksiyon Açıklamaları</a><br/>
+<b>JSON output</b>
+<pre id=out></pre>
+<hr />
+<b>Sample code</b>
+<pre id=sample></pre>
+<hr />
+<p>Ref: 
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters#Examples" 
+   target="NewTab">Rest Parameters</a>
+</p>
+
+<script>
+"use strict";
+function toList(str) {
+  function toObject(x) {
+    let b = {}
+    for (let [i,s] of x.split('\t').entries())
+      b[keys[i]] = (isNaN(s)? s : Number(s))
+    return b
+  }
+    if (str) inp.value = str
+    else str = inp.value
+    convert.disabled = true
+    let [d0, ...data] = str.split('\n')
+    let keys = d0.split('\t')
+    console.log("Keys:", keys)
+    let a = data.map(toObject)
+    out.innerText = JSON.stringify(a, '' ,2)
+    console.table(a)
+    return a
+}
+
+function array_filter(given_array){
+	given_array.filter(x => x.Item != "Binder")
+	
+}
+
+const givenData = `OrderDate	Region	Rep	Item	Units	Unit Cost	Total
+1.6.19	East	Jones	Pencil	95	 1,99 	 189,05 
+1.23.19	Central	Kivell	Binder	50	 19,99 	 999,50 
+2.9.19	Central	Jardine	Pencil	36	 4,99 	 179,64 
+2.26.19	Central	Gill	Pen	27	 19,99 	 539,73 
+3.15.19	West	Sorvino	Pencil	56	 2,99 	 167,44 
+4.1.19	East	Jones	Binder	60	 4,99 	 299,40 
+4.18.19	Central	Andrews	Pencil	75	 1,99 	 149,25 
+5.5.19	Central	Jardine	Pencil	90	 4,99 	 449,10 
+5.22.19	West	Thompson	Pencil	32	 1,99 	 63,68 
+6.8.19	East	Jones	Binder	60	 8,99 	 539,40 
+6.25.19	Central	Morgan	Pencil	90	 4,99 	 449,10`
+
+    title.innerText = document.title
+    sample.innerText = toList
+    inp.value = givenData
+    //toList()  //array of objects
+</script>
+
+</body>
+</html>
