@@ -19,10 +19,12 @@
 </p>
 <div id=sss></div>
 <p><input type=file multiple onChange='fileSelect(this)' /></p>  
+<a href="https://mesutyilmaz01.github.io/Apt/Lablar/CW5/converter.html">Soru3></a>
 <pre id=disp1></pre> <img id=disp2 />
 <input type="text" id="istenendeger" name="fname"><br>
 <input type="button" value ="Soru 2 İçin Tıklayınız." onClick="y()"/></br>
-<p id="soruiki"></p>
+<p id="soruikia"></p>
+<p id="soruikib"></p>
 <input type="button" value ="Soru 1 İçin Tıklayınız." onClick="x()"/>
 <p id="sorubir"></p>
 
@@ -79,13 +81,12 @@ let text ="SORU1 \n";
 	sorubir.innerText = text;
 }
 function y(){
-let sayac = 0;
-let text ="Toplam Sayı : ";
-	JOURNAL.map(x => x.events.includes(istenendeger.innerText) ? console.log("var") : console.log("yok"));
-	console.log(istenendeger.innerText);
-	text+= sayac;
-	soruiki.innerText = text;
-	
+let olanlar = 0;
+let olmayanlar = 0;
+let text ="SORU2 \n";
+	JOURNAL.map(x => x.events.includes(document.getElementById("istenendeger").value) ? olanlar++ : olmayanlar++);
+	soruikia.innerText = "Olanlar : " + olanlar;
+	soruikib.innerText = "Olmayanlar : " + olmayanlar;
 }
     docName.innerText = "Inspector "+VERSION;
     try {
