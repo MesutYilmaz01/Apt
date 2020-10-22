@@ -19,14 +19,22 @@
 </p>
 <div id=sss></div>
 <p><input type=file multiple onChange='fileSelect(this)' /></p>  
-<a href="https://mesutyilmaz01.github.io/Apt/Lablar/CW5/converter.html">Soru3></a>
+<p>Cm'den Inch'e:</p><input type="text" id="inch" placeholder="Inch'e Çevirmek İstediğiniz Değer" name="inch" onChange="inchDegis()">
+<p>Inch'den Cm'e:</p><input type="text" id="cm" placeholder="Cm'e Çevirmek İstediğiniz Değer" name="cm" onChange="cmDegis()"></br></br>
 <pre id=disp1></pre> <img id=disp2 />
-<input type="text" id="istenendeger" name="fname"><br>
-<input type="button" value ="Soru 2 İçin Tıklayınız." onClick="y()"/></br>
-<p id="soruikia"></p>
-<p id="soruikib"></p>
+<hr />
+<input type="text" id="istenendeger" placeholder="Weekend İçerenler İçinde Aramak İstediğiniz?" name="fname"></br></br>
+<input type="button" value ="Soru 2 İçin Tıklayınız." onClick="journalMap()"/></br>
+<p id="soruiki"></p>
+<hr />
 <input type="button" value ="Soru 1 İçin Tıklayınız." onClick="x()"/>
 <p id="sorubir"></p>
+
+<hr />
+<b>Sample code</b>
+<pre id=sample>This text is not shown. Why?</pre>
+
+<hr />
 
 <link  href="https://maeyler.github.io/JS/sss/inspector.css" rel="stylesheet">
 <script src="https://maeyler.github.io/JS/sss/inspector.js"></script>
@@ -80,14 +88,71 @@ let text ="SORU1 \n";
 	}
 	sorubir.innerText = text;
 }
-function y(){
+function journalMap() {
+let inputdanGelen = document.getElementById("istenendeger").value;
+let toplam = 0;
 let olanlar = 0;
-let olmayanlar = 0;
-let text ="SORU2 \n";
-	JOURNAL.map(x => x.events.includes(document.getElementById("istenendeger").value) ? olanlar++ : olmayanlar++);
-	soruikia.innerText = "Olanlar : " + olanlar;
-	soruikib.innerText = "Olmayanlar : " + olmayanlar;
+    let m = new Map();
+	//Bu algoritma sadece weekend olanları ayırıyor.
+    for (let x of JOURNAL){
+      for (let y of x.events) {
+		if(y.includes("weekend")){
+		toplam++;
+			m.set(x.events, toplam);
+		}
+      }
+	 }
+	 //Bu algoritma sadece weekend olanları ayırıyor.
+	 //Burasıda weekendli içinde arama yapıyor.
+	 m.forEach((v,k) => {
+      for(let x of k){
+        if(x == inputdanGelen){
+          olanlar++;
+        }
+      }
+    });
+	//Burasıda weekendli içinde arama yapıyor.
+	soruiki.innerText = "Weekend ile "+inputdanGelen+"'in ortaklaşa bulunduğu sayı : "+ olanlar;
+  }
+  
+  
+  //Bu alan Soru3 İçindir
+  class Cevirici {
+  constructor(cm=0) {
+    this.cm = cm.toFixed(2);
+  }
+  
+  set inch(deger=0) {
+    let obje = deger / 2.54
+    this.cm = obje.toFixed(2);
+  }
+  
+  get inch() {
+    let veri = this.cm * 2.54;
+    return veri.toFixed(2);
+  }
+  static fromInch(deger) {
+    let obje = new Cevirici();
+    obje.inch = deger;
+    return obje;
+  }
 }
+function cmDegis(){
+  let deger = Number(cm.value)
+  let obje = new Cevirici(deger)
+  inch.value = obje.inch;
+}
+
+function inchDegis() {
+  let deger = Number(inch.value)
+  let obje = new Cevirici()
+  obje.inch = deger;
+  cm.value = obje.cm
+}
+ 
+  //Bu alan soru3 içindir
+  
+  sample.innerText = "Soru1 \n"+x.toString()+"\nSoru2 \n"+journalMap.toString()+"\nSoru3 \n"+Cevirici.toString()+"\nFonksiynonları\n"+cmDegis.toString()+"\n"+inchDegis.toString();
     docName.innerText = "Inspector "+VERSION;
     try {
         inspect(sss, init); //makes the table
