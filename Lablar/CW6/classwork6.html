@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+    <title>xxx </title>
+
+  <style> /* CSS comment */
+    body { max-width: 440px; }
+    #url { width: 190px; }
+    span, #url { color: blue; }
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked xxx -->
+
+<h2 id=title title="Modify xxx"></h2>
+<p title="navigator.platform">
+  Platform: <span id=plat>??</span>
+</p>
+<p title="Battery level">
+  Battery level: <span id=level>??</span>
+</p>
+<p title="Latitude/Longitude">
+  Location: <span id=loc>??</span>
+</p>
+<p title="URL exists?">
+  URL <input type=url id=url value="https://mesutyilmaz01.github.io/Apt/"
+      onChange="check()"> <span id=resp>??</span>
+</p>
+<hr />
+<b>Sample code</b>
+<pre id=sample>This text is not shown. Why?</pre>
+
+<hr />
+
+<script>
+"use strict";
+// JavaScript comment
+function check() {
+//write your code here
+	fetch(url.value).then(r => resp.innerText = r.ok, r=> resp.innerText = e)
+}
+function init() {
+//write your code here
+	plat.innerText = navigator.platform
+	navigator.getBattery().then( b => level.innerText = ((b.level)*100)+"%")
+	navigator.geolocation.getCurrentPosition(l => (loc.innerText = l.coords.latitude.toFixed(4)+","
+	+l.coords.longitude.toFixed(4)))
+	document.title = "Classwork 6";
+    title.innerText = document.title;
+    sample.innerText = init+'\n'+check;
+	check()
+}
+	init()
+</script>
+
+</body>
+</html>
