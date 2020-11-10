@@ -15,7 +15,7 @@
 <p><b id=docName></b> &nbsp; <a href="Reading_files">Reference</a>
 </p>
 <p>Remote file <br>
-  <input type=text id=remote size=35 value="https://mesutyilmaz01.github.io/Apt/Lablar/CW4/yorum.txt">
+  <input type=text id=remote size=35 value="https://mesutyilmaz01.github.io/Apt/Lablar/CW7/denemedosya.txt">
 </p>
 <p><input type=file id=local multiple onChange='fileSelect()' /></p>  
 <pre id=out></pre>
@@ -35,6 +35,10 @@ function checkFiles(b) {
     //Implement this
 	let x = remote.value.split("/");
 	let uzakdeger = x[x.length-1];
+	toplamString+="Remote value : "+uzakdeger+"\n";
+	for(let i =0; i<a.length; i++){
+		toplamString+=a[i].name+"\n";
+	}
 	let equal_files = [];
 	for(let yerel of a){
 		if(yerel.size == b.size && yerel.type == b.type){
@@ -42,11 +46,12 @@ function checkFiles(b) {
 		}
 	}
 	if(equal_files.length == 0){
-		out.innerText = "Result: "+a.length+" items checked, all files are different";
+		toplamString += "Result: "+a.length+" items checked, all files are different";
+		out.innerText = toplamString;
 	}
 	else{
-		for(item in equal_files){
-		toplamString += "Result: "+a.length+" items checked, "+item.name+" is the same as "+uzakdeger+" \n";
+		for(let i=0; i<equal_files.length; i++){
+		toplamString += "Result: "+a.length+" items checked, "+equal_files[i].name+" is the same as "+uzakdeger+" \n";
 		}	
 		out.innerText = toplamString;
 	}
