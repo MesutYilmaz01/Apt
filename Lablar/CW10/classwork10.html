@@ -48,18 +48,12 @@
                 crypto.subtle.digest(MENU.algorithm, buf)
                     .then(b => display(MENU.bufferToHex(b)))
             }
-            shaFromFile(f) { //File or Blob
-                //use f.arrayBuffer()
-				return subtle.digest('SHA-1', new TextEncoder().encode(f.arrayBuffer()))
-                .then(x=>[...new Uint8Array(x)].map(toHex).join(''))
+            shaFromFile(f) {
+				f.arrayBuffer().then(MENU.shaFromBuffer);
             }
-            shaFromURL(u) { //URL or string
-                //use fetch(u).then ...
-				fetch(u).then(s=>
-				subtle.digest('SHA-1', new TextEncoder().encode(s.name)
-				.then(x=>[...new Uint8Array(x)].map(toHex).join(''))))
-				
-                return "implement this"
+            shaFromURL(u) {
+				fetch(u).then(resp=> resp.arrayBuffer())
+				.then(MENU.shaFromBuffer)
             }
             shaFromString(txt) {
                 if (txt.startsWith('https://')) {
