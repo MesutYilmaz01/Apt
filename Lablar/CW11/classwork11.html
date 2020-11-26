@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+    <title>xxx </title>
+
+  <style> /* CSS comment */
+    body { max-width: 440px; }
+    #url { width: 190px; }
+    span, #url { color: blue; }
+  </style>
+</head>
+
+<body>   <!-- HTML comment: Modify all items marked xxx -->
+
+<h2>Battery Status</h2>
+<p>
+  <p id="prop">??</p> 
+  <span id=bat>??</span>
+  <p id="leftTime"></p>
+</p>
+<h2>Online Status</h2>
+<p>
+  <span id=onoroff></span>
+</p>
+<h2>Keyboard</h2>
+<p id="key">
+  
+</p>
+<hr />
+<b>Sample code</b>
+<pre id=sample>This text is not shown. Why?</pre>
+
+<hr />
+
+<script>
+"use strict";
+// JavaScript comment
+navigator.getBattery().then( b => bat.innerText = ((b.level)*100)+"%")
+navigator.getBattery().then(b => prop.innerText = (b.charging ? "Charging..." : "Discharging..."))
+ononline = () => onoroff.innerText = "online"
+onoffline = () => onoroff.innerText = "offline"
+function init() {
+//write your code here
+	/*plat.innerText = navigator.platform
+	navigator.getBattery().then( b => level.innerText = ((b.level)*100)+"%")
+	navigator.geolocation.getCurrentPosition(l => (loc.innerText = l.coords.latitude.toFixed(4)+","
+	+l.coords.longitude.toFixed(4)))*/
+    navigator.getBattery().then(b => {
+	b.onlevelchange = () => bat.innerText = 100 * b.level + '%'
+    b.onchargingchange = () => prop.innerText = (b.charging ? "Charging" : "Discharging")
+	b.ondischargingtimechange = () => leftTime.innerText = "Remaining "+(b.dischargingTime/3600).toFix(2)
+	})
+	onkeydown = event => key.innerText = event.key
+    onkeyup = event => key.innerText = event.key
+    ononline = () => onoroff.innerText = "online"
+	onoffline = () => onoroff.innerText = "offline"
+	document.title = "Classwork 11";
+    sample.innerText = init
+}
+	init()
+</script>
+
+</body>
+</html>
