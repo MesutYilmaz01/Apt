@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://blm-fsmvu.github.io/305/work/GitHub_Users.html -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="https://blm-fsmvu.github.io/305/images/icon192.png">
+  <title>GitHub Users</title>
+  <style>
+    body {
+        max-width: 250px;
+    }
+    img {
+        padding-right: 12px; 
+        width: 250px;
+		border: 1px solid gray;
+    }
+	#name{
+		font-weight:bold;
+		font-size:25px;
+	}
+	#login{
+		color:gray;
+		font-size:19px;
+	}
+  </style>
+</head>
+
+<body>
+
+<h2 id="title">GitHub Users</h2>
+<input type="text" id="usr" value="maeyler" onchange="readUser()">
+<p id="out"><img src="./classwork12_files/71901078" align="left">BLM-FSMVU, istanbul<br><a href="https://github.com/BLM-FSMVU" target="NewTab">github.com/BLM-FSMVU</a><br>2 repos<br><br>305, blm-fsmvu.github.io</p>
+</p>
+
+<script>
+"use strict";
+function error(t) {
+    out.style.color = 'red'
+    out.innerText = t; throw t
+}
+async function toJSON(url) {
+    let r = await fetch(url)
+    if (!r.ok) error(r.statusText)
+    return r.json()
+}
+async function readUser() {
+    const BR = "<BR>", 
+      URL = "https://api.github.com/users/"
+    let u = await toJSON(URL+usr.value)
+    if (!u || !u.login) 
+      error(usr.value+' not found')
+    //u.login is the same as usr.value
+    out.style.color = ''
+    out.innerHTML = ''
+    //start with a tiny image
+    let i = document.createElement("img")
+    i.src = u.avatar_url
+    i.align = "left"
+    out.appendChild(i)
+    //add name and location
+	let name_p_first = document.createElement("div");
+	name_p_first.id = "name";
+	name_p_first.innerText=u.name;
+	out.appendChild(name_p_first);
+	let login_p_first = document.createElement("div");
+	login_p_first.id = "login";
+	login_p_first.innerText=u.login;
+	out.appendChild(login_p_first);
+	out.appendChild(document.createElement("br"));
+	let company_p_first = document.createElement("div");
+	company_p_first.id = "company";
+	company_p_first.innerText=u.company;
+	out.appendChild(company_p_first);
+	let location_p_first = document.createElement("div");
+	location_p_first.id = "location";
+	location_p_first.innerText=u.location;
+	out.appendChild(location_p_first);
+	let email=(u.email? u.email:"NotFound");
+	let email_p_first = document.createElement("a");
+	email_p_first.href=email;
+	email_p_first.id = "email";
+	email_p_first.innerText=email;
+	out.appendChild(email_p_first);
+	out.appendChild(document.createElement("br"));
+	let blog_p_first = document.createElement("a");
+	blog_p_first.href=u.blog;
+	blog_p_first.id = "blog";
+	blog_p_first.innerText=u.blog;
+	out.appendChild(blog_p_first);
+}
+    title.innerText = document.title
+    out.innerText = "Reading data"
+    readUser()
+</script>
+
+
+
+</body></html>
