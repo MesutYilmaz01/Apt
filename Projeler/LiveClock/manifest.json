@@ -1,0 +1,15 @@
+{
+  "name": "Live Clock",
+  "short_name": "LC",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "orange",
+  "theme-color": "orange",
+  "icons": [
+    {
+      "src": "image/image.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
