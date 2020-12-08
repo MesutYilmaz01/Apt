@@ -113,7 +113,7 @@ async function askWeather() {
 		+'\nLat '+document.querySelector('#lat').value
 		+'\nLat '+document.querySelector('#long').value
         +'\nWind  '+data.wind.speed*3.6+' kph'
-		+'\nWind Deflect '+data.wind.deg
+		+'\nWind Deflect '+data.wind.deg+' degree'
         +'\nPressure '+data.main.pressure+' hpa'
         +'\nHumidity '+data.main.humidity+'%'
     let {sunrise, sunset} = sys, noon = (sunrise+sunset)/2
