@@ -111,7 +111,7 @@ async function askWeather() {
     let loc = "["+lat.toFixed(2)+", "+lon.toFixed(2)+"]"
     detay.innerText = hh+'\n'+yy+'\n'+loc
 		+'\nLat '+document.querySelector('#lat').value
-		+'\nLat '+document.querySelector('#long').value
+		+'\nLong '+document.querySelector('#long').value
         +'\nWind  '+data.wind.speed*3.6+' kph'
 		+'\nWind Deflect '+data.wind.deg+' degree'
         +'\nPressure '+data.main.pressure+' hpa'
