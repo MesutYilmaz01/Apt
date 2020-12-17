@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://blm-fsmvu.github.io/305/work/Weather.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" href="./classwork13_files/03d.png">
+  <title>Open Weather</title>
+  <style>
+    body {
+        max-width: 420px;
+        margin: 0;
+    }
+    div {
+        display: inline-block;
+        margin: 12px;
+        vertical-align: top;
+    }
+    p { margin: 0; }
+    b { font-size: 18px; }
+    pre { font-size: 14px; }
+    .dar { width: 42%; }
+    #main {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 20px;
+        text-align: center;    
+        background: #9cf;
+        font-size: 24px;
+        margin: 0;
+    }
+    #yer { margin: 10px; }
+    #err { color:red }
+	#map{ width:100%;
+			height:400px;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+<!-- Make sure you put JS AFTER CSS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+
+<body>
+<div id="main">
+<p id="yer">Kâğıthane, TR</p>
+<p><img id="icon" src="./classwork13_files/03d.png">
+<span id="hava">Clouds  12°</span></p>
+</div>
+
+<div class="dar">
+  <b>Detail</b>
+  <pre id="detay">Clouds  12°<br>Kâğıthane, TR<br>[41.08, 28.99]<br>Wind  3.6 m/s<br>Pressure 1013 hpa<br>Humidity 87%</pre>
+</div>
+<div class="dar">
+  <b>Sun</b>
+  <pre id="gunes">Rise 08:17<br>Noon 12:56<br>Set  17:36</pre>
+</div>
+<hr>
+<br><br>
+<input id="lat" type ="number"  value="41" placeholder="Enlem Giriniz..."> <input id="long" type="number" value="29" placeholder="Boylam Giriniz...">
+<br><br>
+<input type="submit" value="Hava Durumunu Getir" onclick=askWeather()>
+<div>
+<p id="err" style="display: none;">You need an API key for openweathermap.org 
+  <a href="https://openweathermap.org/appid" target="NewTab">here</a> 
+</p>
+</div>
+<hr>
+
+<div id=one>
+    <h2 id=title></h2>
+    <input id=but type=button value="Run" onClick="start()"> &emsp;
+    Zoom = <span id=out></span>
+    <!-- <input type=checkbox onClick="mapType(checked)">Satellite -->
+</div>
+<hr />
+<div id=map></div>
+<hr />
+<div id=two>
+    </p>
+    <p>Ref: 
+    <a href="https://www.openstreetmap.org/about" target="NewTab">OpenStreetMap</a>
+    &emsp;
+    <a href="https://leafletjs.com/examples" target="NewTab">Leaflet JS</a>
+    </p>
+</div>
+<script>
+"use strict";
+function toHM(t, round) {
+    let d = t ? new Date(t*1000) : new Date()
+    if (round && d.getSeconds()>29)
+        d = new Date((t+30)*1000) //round
+    let h = d.getHours()
+    let m = d.getMinutes()
+    let twoDigits = t => (t>9? '' : '0')+t
+    return twoDigits(h)+":"+twoDigits(m)
+}
+async function toJSON(url) {
+    let r = await fetch(url)
+    if (!r.ok) error(r.statusText)
+    return r.json()
+}
+// Location
+var lat, lon;  //global values
+// Weather
+var accessKey;
+async function askWeather() { 
+	lat = document.querySelector('#lat');
+	lon= document.querySelector('#long');
+	console.log(lat.value, lon.value);
+    const U = "https://api.openweathermap.org/data/2.5/weather?"
+    let url = U+"lat="+lat.value+"&lon="+lon.value+"&APPID="+accessKey;
+    hava.innerText = "getting weather"
+    detay.innerText = ''
+    gunes.innerText = ''
+   let data = await toJSON(url)
+   showWeather(data);
+   getAccordingtoWeather(lat,lon)
+   }
+ function showWeather(data) {
+    let w = data.weather[0]; showIcon(w.icon)
+    let celsius = convert(data.main.temp).toFixed(0)
+    let hh = w.main+"  "+celsius+"°", {sys} = data
+    let yy = data.name+', '+sys.country
+    hava.innerText = hh; yer.innerText = yy
+    console.log(hh, yy); console.log(sys)
+    lat = data.coord.lat; lon = data.coord.lon
+    let loc = "["+lat.toFixed(2)+", "+lon.toFixed(2)+"]"
+    detay.innerText = hh+'\n'+yy+'\n'+loc
+		+'\nLat '+document.querySelector('#lat').value
+		+'\nLong '+document.querySelector('#long').value
+        +'\nWind  '+data.wind.speed*3.6+' kph'
+		+'\nWind Deflect '+data.wind.deg+' degree'
+        +'\nPressure '+data.main.pressure+' hpa'
+        +'\nHumidity '+data.main.humidity+'%'
+    let {sunrise, sunset} = sys, noon = (sunrise+sunset)/2
+    gunes.innerText = 'Rise '+toHM(sunrise, 1)
+        +'\nNoon '+toHM(noon, 1)+'\nSet  '+toHM(sunset, 1)
+}
+
+function showIcon(i) {
+    const URL = "https://openweathermap.org/img/w/"
+    icon.src = URL+i+".png"
+    document.querySelector('link').href = icon.src
+}
+function convert(kelvin){
+    return (kelvin - 273.15);
+    //return celsius*1.8 + 32
+}
+// Interaction
+function askUser() {
+    let k = prompt('Please enter openweather key:')
+    if (!k) error('You need an API key')
+    return k
+}
+function error(e) {
+    main.style.display = "none"; //hide
+    //refs.style.display = "none";
+    err.style.display = ''; //show
+    throw e
+}
+function getAPIkey() {
+    if (origin.startsWith('http') && localStorage) {
+        if (!localStorage.keys) localStorage.keys = '{}'
+        let keys = JSON.parse(localStorage.keys)
+        if (!keys.openweather) {
+           keys.openweather = askUser()
+           localStorage.keys = JSON.stringify(keys)
+        }
+        accessKey = keys.openweather
+    } else { //cannot use localStorage
+        accessKey = askUser()
+    }
+}
+
+//MAP SIDE BEGIN
+"use strict"
+var MAP  //global
+function init() {
+    //initial coordinates are given: 50. Yil Parki
+    let p = {lat:48, lng:48}
+    console.log('init at', p)
+    //L is global object from leaflet
+    MAP = L.map('map').setView(p, 10)  //setZoom(10)
+    let u = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    let attribution = '&copy; OpenStreetMap contributors'
+    L.tileLayer(u, {attribution}).addTo(MAP)
+    let report = () => out.innerText = MAP.getZoom()
+    MAP.on('zoom', report); report()
+    MAP.on('click', e => {
+	    document.querySelector("#lat").value = e.latlng.lat
+        document.querySelector("#long").value = e.latlng.lng
+		MAP = MAP.setView([e.latlng.lat,e.latlng.lng], 10)
+        askWeather()
+	})
+}
+function getAccordingtoWeather(lat,lon) {
+    let p = {lat:lat, lng:lon}
+    MAP = MAP.setView(p, 10)  //setZoom(10)
+    let u = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+    let attribution = '&copy; OpenStreetMap contributors'
+    L.tileLayer(u, {attribution}).addTo(MAP)
+}
+var incr = 0;
+function stop() {
+    but.value = "Run"
+    but.onclick = start
+    incr = 0
+}
+function start() {
+    but.value = "Stop"
+    but.onclick = stop
+    incr = 1; zoom()
+}
+function zoom() {
+    if (incr == 0) return
+    let MIN = 5, MAX = MAP.getMaxZoom()
+    let z = MAP.getZoom() + incr
+    MAP.setZoom(z)
+    setTimeout(zoom, 700)
+    if (z <= MIN) incr = 1
+    if (z >= MAX) incr = -1
+}
+//MAP SIDE END
+	init();
+    err.style.display = "none"
+    getAPIkey(); askWeather().lat=41; askWeather().lon=29;
+</script>
+
+
+
+</body></html>
