@@ -3,10 +3,12 @@
 	font-family: Gotham Rounded, sans-serif;
 }
 body{
-	max-width: 400px;
+	max-width: 600px;
 	background: #da42f5;
 }
 .border{
+	margin-left:15%;
+	margin-top:5%;
 	width:320px;
 	height:320px;
 	background-color:#820d0d;
