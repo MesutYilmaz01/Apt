@@ -106,3 +106,21 @@ body{
 	border-radius:50%;
 	transform: translate(-50%,-50%);
 }
+.margin-top-10{
+	margin-top:10%;
+}
+.font-size-1-5rem{
+	font-size:1.5rem;
+}
+.font-size-1-2rem{
+	font-size:1.2rem;
+}
+.td-none{
+	text-decoration:none;
+}
+.color-white{
+	color:white;
+}
+.tc{
+	text-align:center;
+}
